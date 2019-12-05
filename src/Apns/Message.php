@@ -459,6 +459,12 @@ class Message
         if (! is_null($this->contentAvailable)) {
             $aps['content-available'] = $this->contentAvailable;
         }
+        if (! is_null($this->apnsPriority)) {
+            $aps['apns-priority'] = $this->apnsPriority;
+        }
+        if (! is_null($this->apnsPushType)) {
+            $aps['apns-push-type'] = $this->apnsPushType;
+        }
         if (! is_null($this->category)) {
             $aps['category'] = $this->category;
         }
