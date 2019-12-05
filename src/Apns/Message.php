@@ -61,6 +61,18 @@ class Message
     private $mutableContent;
 
     /**
+     * apns-priority
+     * @var int|null
+     */
+    protected $apnsPriority;
+
+    /**
+     * apns-push-type
+     * @var string|null
+     */
+    protected $apnsPushType;
+
+    /**
      * Content Available
      * @var int|null
      */
@@ -311,6 +323,38 @@ class Message
     }
 
     /**
+     * Set APNS priority
+     *
+     * @param  int|null $value
+     * @return Message
+     */
+    public function setApnsPriority($value)
+    {
+        if ($value !== null && !is_int($value)) {
+            throw new Exception\InvalidArgumentException('ApnsPriority must be null or an integer');
+        }
+        $this->apnsPriority = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set APNS push type
+     *
+     * @param  string|null $value
+     * @return Message
+     */
+    public function setApnsPushType($value)
+    {
+        if ($value !== null && !is_string($value)) {
+            throw new Exception\InvalidArgumentException('ApnsPushType must be null or an integer');
+        }
+        $this->apnsPushType = $value;
+
+        return $this;
+    }
+
+    /**
      * Get Category
      *
      * @return string|null
@@ -405,6 +449,9 @@ class Message
         }
         if (! is_null($this->sound)) {
             $aps['sound'] = $this->sound;
+        } else {
+            // set alert to empty string for silent PN
+            $aps['alert'] = '';
         }
         if (! is_null($this->mutableContent)) {
             $aps['mutable-content'] = $this->mutableContent;
